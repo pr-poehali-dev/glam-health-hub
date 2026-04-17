@@ -1,6 +1,6 @@
 import Icon from '@/components/ui/icon';
 
-const HERO_IMAGE = 'https://cdn.poehali.dev/projects/48ca5154-8937-4bc8-b36c-ec54ff253faf/files/07483a9c-2562-4fba-b267-2d039582e359.jpg';
+const HERO_IMAGE = 'https://cdn.poehali.dev/projects/48ca5154-8937-4bc8-b36c-ec54ff253faf/files/6a0bcbeb-bb2f-4393-9d38-b2e76ab91e4a.jpg';
 
 interface HeroSectionProps {
   onNavigate: (section: string) => void;
