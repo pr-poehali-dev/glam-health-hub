@@ -1,0 +1,13 @@
+{
+  "tests": [
+    {
+      "name": "Create booking without auth",
+      "method": "POST",
+      "path": "/",
+      "body": {"booking_type": "consultation", "contact_name": "Анна", "contact_phone": "+79991234567", "contact_email": "test@test.com"},
+      "expectedStatus": 200,
+      "expectedBody": {"status": "new"},
+      "bodyMatcher": "partial"
+    }
+  ]
+}

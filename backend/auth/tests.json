@@ -1,0 +1,31 @@
+{
+  "tests": [
+    {
+      "name": "Register user",
+      "method": "POST",
+      "path": "/",
+      "body": {"action": "register", "email": "test_aura2@example.com", "password": "test123", "role": "user", "first_name": "Анна", "last_name": "Тестова", "phone": "+79991234567", "city": "Москва"},
+      "expectedStatus": 200,
+      "expectedBody": {"role": "user"},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Login user",
+      "method": "POST",
+      "path": "/",
+      "body": {"action": "login", "email": "test_aura2@example.com", "password": "test123"},
+      "expectedStatus": 200,
+      "expectedBody": {"role": "user"},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Login wrong password",
+      "method": "POST",
+      "path": "/",
+      "body": {"action": "login", "email": "test_aura2@example.com", "password": "wrong"},
+      "expectedStatus": 401,
+      "expectedBody": {"error": "Неверный email или пароль"},
+      "bodyMatcher": "partial"
+    }
+  ]
+}

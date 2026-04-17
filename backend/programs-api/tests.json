@@ -1,0 +1,12 @@
+{
+  "tests": [
+    {
+      "name": "Get approved programs",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {"programs": []},
+      "bodyMatcher": "partial"
+    }
+  ]
+}

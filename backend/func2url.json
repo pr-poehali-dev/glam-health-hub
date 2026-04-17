@@ -1,0 +1,6 @@
+{
+  "auth": "https://functions.poehali.dev/50a9040b-05c1-416b-8bf0-05c4eaad87d2",
+  "bookings": "https://functions.poehali.dev/3b8f438b-0ede-497a-8569-98a38e1af92c",
+  "programs-api": "https://functions.poehali.dev/3a8d6d4f-b5a0-4874-942a-1b6de5be4e70",
+  "products": "https://functions.poehali.dev/82913488-73cd-4fe9-a05b-f3122f863af9"
+}

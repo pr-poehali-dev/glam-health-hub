@@ -8,18 +8,36 @@ import ProgramsSection from '@/components/sections/ProgramsSection';
 import OptimizerSection from '@/components/sections/OptimizerSection';
 import CommunitySection from '@/components/sections/CommunitySection';
 import AboutSection from '@/components/sections/AboutSection';
+import AuthModal from '@/components/AuthModal';
+import BrandCabinet from '@/components/BrandCabinet';
+import SalonCabinet from '@/components/SalonCabinet';
+import { getRole } from '@/lib/api';
 
 const sections = ['home', 'shop', 'consultations', 'programs', 'optimizer', 'community', 'about'];
 
 export default function Index() {
   const [activeSection, setActiveSection] = useState('home');
+  const [showAuth, setShowAuth] = useState(false);
+  const [showCabinet, setShowCabinet] = useState(false);
+  const [authKey, setAuthKey] = useState(0);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
   const navigateTo = (sectionId: string) => {
+    setShowCabinet(false);
     const el = sectionRefs.current[sectionId];
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  };
+
+  const handleAuthSuccess = (_role: string, _name: string) => {
+    setAuthKey(k => k + 1);
+    setShowAuth(false);
+  };
+
+  const handleCabinetClick = () => {
+    setShowCabinet(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -43,41 +61,48 @@ export default function Index() {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [showCabinet]);
+
+  const role = getRole();
 
   return (
     <div className="min-h-screen">
-      <Navbar activeSection={activeSection} onNavigate={navigateTo} />
+      <Navbar
+        activeSection={activeSection}
+        onNavigate={navigateTo}
+        onAuthClick={() => setShowAuth(true)}
+        onCabinetClick={handleCabinetClick}
+        authKey={authKey}
+      />
 
-      <main>
-        <div id="home">
-          <HeroSection onNavigate={navigateTo} />
-        </div>
+      {showAuth && (
+        <AuthModal
+          onClose={() => setShowAuth(false)}
+          onSuccess={handleAuthSuccess}
+        />
+      )}
 
-        <div id="shop">
-          <ShopSection />
+      {showCabinet ? (
+        <div className="pt-16">
+          {role === 'brand' && <BrandCabinet />}
+          {role === 'salon' && <SalonCabinet />}
+          {role !== 'brand' && role !== 'salon' && (
+            <div className="text-center py-24">
+              <p className="font-cormorant text-2xl text-charcoal">Личный кабинет недоступен для вашей роли</p>
+            </div>
+          )}
         </div>
-
-        <div id="consultations">
-          <ConsultationsSection />
-        </div>
-
-        <div id="programs">
-          <ProgramsSection />
-        </div>
-
-        <div id="optimizer">
-          <OptimizerSection />
-        </div>
-
-        <div id="community">
-          <CommunitySection />
-        </div>
-
-        <div id="about">
-          <AboutSection />
-        </div>
-      </main>
+      ) : (
+        <main>
+          <div id="home"><HeroSection onNavigate={navigateTo} /></div>
+          <div id="shop"><ShopSection /></div>
+          <div id="consultations"><ConsultationsSection /></div>
+          <div id="programs"><ProgramsSection /></div>
+          <div id="optimizer"><OptimizerSection /></div>
+          <div id="community"><CommunitySection /></div>
+          <div id="about"><AboutSection /></div>
+        </main>
+      )}
 
       <Footer onNavigate={navigateTo} />
     </div>
